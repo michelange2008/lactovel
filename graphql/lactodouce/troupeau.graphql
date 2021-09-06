@@ -1,0 +1,24 @@
+type Troupeau {
+  id: ID!
+  effectif: Int!
+  user: User!
+  chevres: [Chevre]
+  eleveur: Eleveur
+  races: [Race]
+  created_at: Date
+  updated_at: Date
+}
+
+extend type Query {
+  troupeaus: [Troupeau!]! @all
+  troupeau(id: ID! @eq): Troupeau @find
+}
+
+extend type Mutation {
+  createTroupeau(input: CreateTroupeauInput! @spread): Troupeau@create
+}
+
+input CreateTroupeauInput {
+  effectif: Int!
+  user: CreateUserBelongsTo
+}

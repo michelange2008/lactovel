@@ -1,0 +1,65 @@
+type Eleveur {
+  id: ID!
+  user: User!
+  address_1: String
+  address_2: String
+  cp: String
+  commune: String
+  tel: Tel
+  lat: Float
+  long: Float
+  installation: Int
+  troupeau: Troupeau
+}
+
+extend type Query {
+  eleveurs: [Eleveur!] @all
+  eleveur(id: ID! @eq) : Eleveur @first
+}
+
+extend type Mutation {
+  createEleveur(input: CreateEleveurInput! @spread): Eleveur @create
+  createEleveurUser(input: CreateEleveurUserInput! @spread): Eleveur @create
+}
+
+input CreateEleveurInput {
+  user_id: Int
+  address_1: String
+  address_2: String
+  cp: String
+  commune: String
+  tel: Tel
+  lat: Float
+  long: Float
+  installation: Int
+}
+
+input CreateEleveurUserInput {
+  address_1: String
+  address_2: String
+  cp: String
+  commune: String
+  tel: Tel
+  lat: Float
+  long: Float
+  installation: Int
+  user: CreateUserBelongsTo
+}
+
+input CreateUserBelongsTo {
+  connect: ID
+  create: CreateUserEleveurInput
+  # update: UpdateUserInput
+  # upsert: UpsertUserInput
+}
+
+input CreateUserEleveurInput {
+  name: String!
+  email: String!
+  password: String!
+  role: RoleBelongsTo
+}
+
+input RoleBelongsTo {
+  connect: ID
+}

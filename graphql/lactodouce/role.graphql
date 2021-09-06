@@ -1,0 +1,12 @@
+type Role {
+  id: ID!
+  name: String!
+  isAdmin: Boolean!
+  isEleveur: Boolean!
+  users: [User]
+}
+
+extend type Query {
+  roles: [Role!]! @all
+  role(id:ID! @eq): Role @first
+}

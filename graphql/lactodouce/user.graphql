@@ -1,0 +1,48 @@
+type User {
+    id: ID!
+    name: String!
+    email: Email!
+    created_at: DateTime!
+    updated_at: DateTime!
+    role: Role!
+    eleveur: Eleveur
+    troupeau: Troupeau
+}
+
+extend type Query {
+  users: [User!]! @all @orderBy(column: "name", direction: ASC)
+  user(id: ID @eq): User @find
+}
+
+extend type Mutation {
+  createUser(input: CreateUserInput! @spread): User @create
+  createUserRole(input: CreateUserRoleInput! @spread): User @create
+  updateUser(id: ID!, name:String, email:Email, role_id:Int): User @update
+  upsertUser(id: ID!, name:String!, email:Email, password: String role_id:Int): User @upsert
+  deleteUser(id: ID!): User @delete
+}
+
+input CreateUserInput {
+  name: String!
+  email: String!
+  password: String!
+  role_id: Int!
+}
+
+input CreateUserRoleInput {
+  name: String!
+  email: String!
+  password: String!
+  role: CreateRoleBelongsTo
+}
+
+input CreateRoleBelongsTo {
+  connect: ID
+  create: CreateRoleInput
+}
+
+input CreateRoleInput {
+  name: String!
+  isAdmin: Boolean!
+  isEleveur: Boolean!
+}

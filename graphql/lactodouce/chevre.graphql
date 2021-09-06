@@ -1,0 +1,28 @@
+type Chevre {
+  id: ID!
+  numero: String!
+  name: String!
+  race: Race
+  troupeau: Troupeau!
+  image: Image @morphOne
+}
+
+extend type Query {
+  chevres: [Chevre!]! @all
+  chevre(id: ID! @eq): Chevre @find
+  nbChevres: Int! @count(model: "Chevre")
+  chevresGetByName(name: String! @eq): [Chevre] @all
+}
+
+extend type Mutation {
+  deleteChevre(id:ID!): Chevre @delete
+  createChevre(input: CreateChevreInput @spread): Chevre @create
+}
+
+"On peut rajouter une race en fournissant l'id et le nom. Si on fournit l'id"
+input CreateChevreInput {
+  numero: String!
+  name: String
+  race: CreateRaceInput @upsert
+  troupeau_id: Int
+}

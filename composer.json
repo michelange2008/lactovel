@@ -12,7 +12,9 @@
         "laravel/framework": "^8.40",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^3.3"
+        "laravel/ui": "^3.3",
+        "mll-lab/graphql-php-scalars": "^4.1",
+        "nuwave/lighthouse": "^5.23"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
